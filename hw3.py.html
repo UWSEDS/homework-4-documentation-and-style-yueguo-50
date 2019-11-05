@@ -1,7 +1,12 @@
+#DataFrame checking module
+"""
+This module aims to check the DataFrame as specified by the user.
+
+Example:
+         $ python hw3.py
+"""
+
 #!/usr/bin/env python
-"""
-This script prompts a user to enter a dataset and column name
-"""
 # coding: utf-8
 
 # In[1]:
@@ -22,16 +27,23 @@ os.getcwd()
 
 # In[3]:
 
+def get_data(url):
+    """
+	This function creates a dataframe from a URL that points to a CSV file.
+	Args:
+		url: webpage link for desirable dataset
 
+	Returns:
+		DATA: CSV file that contains downloaded dataset
+    """
 ## Write a python reads creates a dataframe from a URL that points to a CSV file.
-get_ipython().system('curl -o bycycle.csv \
-    https://data.seattle.gov/api/views/65db-xm6k/rows.csv?accessType=DOWNLOAD')
+get_ipython().system('curl -o data.csv url')
 
 
 # In[4]:
 
 
-DATA = pd.read_csv('bycycle.csv')
+DATA = pd.read_csv('data.csv')
 
 
 # In[5]:
@@ -44,7 +56,7 @@ def test_dataframe(dataset, column_name):
     This function test whether the input dataframe follows a set of conditions.
     test_dataframe is the function name
 
-    parameters:
+    Args:
         dataset: a pandas DataFrame
         column_name: a list of column names
         dataType: desired data type
