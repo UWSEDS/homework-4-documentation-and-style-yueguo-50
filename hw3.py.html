@@ -1,0 +1,88 @@
+#!/usr/bin/env python
+"""
+This script prompts a user to enter a dataset and column name
+"""
+# coding: utf-8
+
+# In[1]:
+
+import os
+import pandas as pd
+from IPython import get_ipython
+
+# In[2]:
+
+
+#change the current directory into data folder
+
+os.chdir(r"/Users/Clara/Google Drive (yueg50@gmail.com)/UW courses \
+    /2019 Fall quarter/CSE583_SoftwareDevelop/homework/hw3/")
+os.getcwd()
+
+
+# In[3]:
+
+
+## Write a python reads creates a dataframe from a URL that points to a CSV file.
+get_ipython().system('curl -o bycycle.csv \
+    https://data.seattle.gov/api/views/65db-xm6k/rows.csv?accessType=DOWNLOAD')
+
+
+# In[4]:
+
+
+DATA = pd.read_csv('bycycle.csv')
+
+
+# In[5]:
+
+
+## Create a python module called test_dataframe.py
+## that has a test that replicates what was done in item (2) for HW2.
+def test_dataframe(dataset, column_name):
+    """
+    This function test whether the input dataframe follows a set of conditions.
+    test_dataframe is the function name
+
+    parameters:
+        dataset: a pandas DataFrame
+        column_name: a list of column names
+        dataType: desired data type
+
+    Resturns:
+        Ture if
+            1) The DataFrame contains only the columns that you /
+		 specified as the second argument; and
+            2) The values in each column have the same python type; and
+            3) There are at least 1 rows in the DataFrame.
+    """
+## Convert name of columns in dataframe into list
+    list_of_names = dataset.columns.tolist()
+
+## Check the length of columns in dataframe and length of given column list
+    if len(list_of_names) == len(column_name):
+## If the lengths are same, then check each name
+        for i in range(len(list_of_names)):
+            if list_of_names[i] in column_name:
+## If the names are the same, then check data type in each column.
+## If single datatype in a column, then the dtype should not be object.
+                if pd.api.types.is_object_dtype(dataset[list_of_names[i]]) == True:
+#                     if dataset[list_of_names[i]].dtype == dataType:
+## Check for nan values.
+                    dataset.isnull().sum()
+                    if dataset.shape[0] >= 1:
+                        print('True')
+                    else:
+                        print('The dataframe does not have at least one row.')
+#                 else:
+#                     print('Not all columns have values of the corect type.')
+
+
+
+
+
+# In[6]:
+
+
+test_dataframe(DATA, ['Date', 'Fremont Bridge East Widewalk', \
+	'Fremont Bridge West Sidewalk'])
